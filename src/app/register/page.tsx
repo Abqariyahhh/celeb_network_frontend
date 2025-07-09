@@ -22,7 +22,7 @@ export default function RegisterPage() {
 
     try {
       // 1. Register the user
-      const registerRes = await fetch("http://localhost:3001/users/register", {
+      const registerRes = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -31,7 +31,7 @@ export default function RegisterPage() {
       if (!registerRes.ok) throw new Error("Registration failed");
 
       // 2. Login the user
-      const loginRes = await fetch("http://localhost:3001/auth/login", {
+      const loginRes = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -43,7 +43,7 @@ export default function RegisterPage() {
       const token = loginData.access_token;
 
       // 3. Register fan profile (requires token)
-      const fanProfileRes = await fetch("http://localhost:3001/fan", {
+      const fanProfileRes = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/fan", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

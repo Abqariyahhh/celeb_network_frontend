@@ -33,7 +33,7 @@ export default function CelebritySignup() {
     setLoadingSuggestions(true);
     setMessage(null);
     try {
-      const res = await fetch("http://localhost:3001/openrouter/celebrity-suggestions", {
+      const res = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/openrouter/celebrity-suggestions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: intro }),
@@ -74,7 +74,7 @@ export default function CelebritySignup() {
     setLoadingSubmit(true);
     setMessage(null);
     try {
-      const res = await fetch("http://localhost:3001/celebrities", {
+      const res = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/celebrities", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

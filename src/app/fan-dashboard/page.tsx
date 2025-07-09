@@ -27,7 +27,7 @@ export default function FanDashboardPage() {
 
     const fetchFollowed = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/fan/${fanId}/dashboard`);
+        const res = await fetch(`https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/fan/${fanId}/dashboard`);
 
         if (!res.ok) throw new Error("Failed to load fan dashboard");
 
@@ -55,7 +55,7 @@ export default function FanDashboardPage() {
     if (!fanId) return;
 
     try {
-      const res = await fetch("http://localhost:3001/fan/unfollow", {
+      const res = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/fan/unfollow", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fanId, celebrityId }),

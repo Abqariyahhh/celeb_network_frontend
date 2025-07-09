@@ -27,7 +27,7 @@ export default function CelebrityProfilePage() {
     async function fetchProfile() {
       if (!id) return;
       try {
-        const res = await fetch(`http://localhost:3001/celebrities/${id}`);
+        const res = await fetch(`https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/celebrities/${id}`);
         if (!res.ok) throw new Error("Failed to fetch celebrity profile");
         const data: CelebrityDetail = await res.json();
         setCelebrity(data);
@@ -54,7 +54,7 @@ export default function CelebrityProfilePage() {
     setDownloading(true);
     try {
       const res = await fetch(
-        `http://localhost:3001/pdf/celebrity/name/${encodeURIComponent(celebrity.name)}`,
+        `https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/pdf/celebrity/name/${encodeURIComponent(celebrity.name)}`,
         {
           method: "GET",
           headers: {

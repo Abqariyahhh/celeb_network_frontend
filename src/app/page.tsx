@@ -24,7 +24,7 @@ export default function Home() {
   useEffect(() => {
     const fetchCelebrities = async () => {
       try {
-        const res = await fetch("http://localhost:3001/celebrities");
+        const res = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/celebrities");
         const data: Celebrity[] = await res.json();
 
         const uniqueMap = new Map<string, Celebrity>();
@@ -53,7 +53,7 @@ export default function Home() {
     if (!fanId) return alert("Fan not logged in");
 
     try {
-      const res = await fetch("http://localhost:3001/fan/follow", {
+      const res = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/fan/follow", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fanId, celebrityId }),

@@ -20,7 +20,7 @@ export default function LoginPage() {
 
   try {
     // Step 1: Login user
-    const res = await fetch("http://localhost:3001/auth/login", {
+    const res = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -38,7 +38,7 @@ export default function LoginPage() {
     login(username, token);
 
     // Step 3: Fetch fan profile using token (fan/me)
-    const fanRes = await fetch("http://localhost:3001/fan/me", {
+    const fanRes = await fetch("https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/fan/me", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
