@@ -54,9 +54,9 @@ export default function LoginPage() {
 
     // Step 4: Redirect
     router.push("/fan-dashboard");
-  } catch (error: any) {
-    setMessage(error.message || "Something went wrong");
-  }
+  } catch (error: unknown) {
+  if (error instanceof Error) setMessage(error.message || "Something went wrong");
+}
 
   setLoading(false);
 }

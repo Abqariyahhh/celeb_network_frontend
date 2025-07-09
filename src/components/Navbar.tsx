@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
+//import { Moon, Sun } from "lucide-react";
 
 export default function Navbar() {
-  const { user, token, logout } = useAuth();
+  const {token, logout } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
   const [darkMode, setDarkMode] = useState(false);

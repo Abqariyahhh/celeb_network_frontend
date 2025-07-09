@@ -36,9 +36,13 @@ export default function Home() {
         });
 
         setCelebrities(Array.from(uniqueMap.values()));
-      } catch (err) {
-        console.error("Failed to fetch celebrities:", err);
-      }
+      } catch (err: unknown) {
+  if (err instanceof Error) {
+    console.error("Failed to fetch celebrities:", err.message);
+  } else {
+    console.error("Failed to fetch celebrities.");
+  }
+}
     };
 
     fetchCelebrities();
@@ -59,9 +63,13 @@ export default function Home() {
 
       alert("Followed successfully!");
       setFollowedIds((prev) => [...prev, celebrityId]);
-    } catch (err) {
-      alert("Error following celebrity.");
-    }
+    } catch (err: unknown) {
+  if (err instanceof Error) {
+    alert(err.message);
+  } else {
+    alert("Error following celebrity.");
+  }
+}
   };
 
   const filteredCelebs = celebrities.filter((c) =>

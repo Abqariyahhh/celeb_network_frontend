@@ -33,9 +33,15 @@ export default function FanDashboardPage() {
 
         const data: FollowedCelebrity[] = await res.json();
         setCelebrities(data);
-      } catch (err: any) {
-        setError(err.message || "Something went wrong");
-      } finally {
+      } catch (err: unknown) {
+  if (err instanceof Error) {
+    setError(err.message || "Something went wrong");
+  } else {
+    setError("Something went wrong");
+  }
+}
+      
+      finally {
         setLoading(false);
       }
     };
@@ -61,9 +67,13 @@ export default function FanDashboardPage() {
       setCelebrities((prev) =>
         prev.filter((c) => c.celebrityId !== celebrityId)
       );
-    } catch (err) {
-      alert("Failed to unfollow. Try again.");
-    }
+    } catch (err: unknown) {
+  if (err instanceof Error) {
+    setError(err.message || "Something went wrong");
+  } else {
+    setError("Something went wrong");
+  }
+}
   };
 
   if (loading) {
@@ -102,7 +112,7 @@ export default function FanDashboardPage() {
 
       {celebrities.length === 0 ? (
         <p className="text-center text-gray-600 dark:text-gray-300">
-          🧐 You're not following any celebrities yet.
+          🧐 You&apos;re not following any celebrities yet.
         </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -64,9 +64,13 @@ export default function RegisterPage() {
       login(form.username, token); // sets context + localStorage
       localStorage.setItem("fanId", fanData.id); // fan profile ID
       router.push("/fan-dashboard");
-    } catch (err: any) {
-      setMessage(err.message || "Something went wrong");
-    }
+    } catch (err: unknown) {
+  if (err instanceof Error) {
+    setMessage(err.message || "Something went wrong");
+  } else {
+    setMessage("Something went wrong");
+  }
+}
 
     setLoading(false);
   };

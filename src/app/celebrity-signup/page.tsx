@@ -15,7 +15,7 @@ interface CelebritySuggestion {
 export default function CelebritySignup() {
   const [intro, setIntro] = useState("");
   const [suggestions, setSuggestions] = useState<CelebritySuggestion[]>([]);
-  const [selected, setSelected] = useState<CelebritySuggestion | null>(null);
+  //const [selected, setSelected] = useState<CelebritySuggestion | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     category: "",
@@ -41,14 +41,18 @@ export default function CelebritySignup() {
       if (!res.ok) throw new Error("Failed to fetch suggestions");
       const data = await res.json();
       setSuggestions(data.suggestions || []);
-    } catch (error) {
-      setMessage("Error fetching suggestions.");
-    }
+    } catch (error: unknown) {
+  if (error instanceof Error) {
+    setMessage(error.message || "Error fetching suggestions.");
+  } else {
+    setMessage("Error fetching suggestions.");
+  }
+}
     setLoadingSuggestions(false);
   }
 
   function selectSuggestion(suggestion: CelebritySuggestion) {
-    setSelected(suggestion);
+    //setSelected(suggestion);
     setFormData({
       name: suggestion.name || "",
       category: suggestion.category || "",
@@ -95,11 +99,16 @@ export default function CelebritySignup() {
         fanbase: "",
         genre: "",
       });
-      setSelected(null);
+      //setSelected(null);
       setIntro("");
-    } catch (error: any) {
-      setMessage(error.message || "Error submitting form.");
-    }
+    } 
+    catch (error: unknown) {
+  if (error instanceof Error) {
+    setMessage(error.message || "Error submitting form.");
+  } else {
+    setMessage("Error submitting form.");
+  }
+}
     setLoadingSubmit(false);
   }
 

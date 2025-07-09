@@ -31,11 +31,15 @@ export default function CelebrityProfilePage() {
         if (!res.ok) throw new Error("Failed to fetch celebrity profile");
         const data: CelebrityDetail = await res.json();
         setCelebrity(data);
-      } catch (err: any) {
-        setError(err.message || "Error loading profile");
-      } finally {
-        setLoading(false);
-      }
+      } catch (err: unknown) {
+  if (err instanceof Error) {
+    setError(err.message);
+  } else {
+    setError("Error loading profile");
+  }
+}finally {
+      setLoading(false); // ✅ Mark loading complete
+    }
     }
 
     fetchProfile();
@@ -73,9 +77,14 @@ export default function CelebrityProfilePage() {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
-    } catch (err: any) {
-      alert(err.message || "Failed to download PDF");
-    } finally {
+    } catch (err: unknown) {
+  if (err instanceof Error) {
+    alert(err.message);
+  } else {
+    alert("Failed to download PDF");
+  }
+}
+    finally {
       setDownloading(false);
     }
   }
