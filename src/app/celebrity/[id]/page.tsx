@@ -46,48 +46,52 @@ export default function CelebrityProfilePage() {
   }, [id]);
 
   async function handleDownloadPDF() {
-    if (!celebrity || !celebrity.name || !token) {
-      alert("You must be logged in to download the PDF");
+  if (!celebrity || !celebrity.name || !token) {
+    alert("You must be logged in to download the PDF");
+    return;
+  }
+
+  setDownloading(true);
+  try {
+    const res = await fetch(
+      `https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/pdf/celebrity/name/${encodeURIComponent(celebrity.name)}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("PDF generation failed:", errorText);
+      throw new Error("Failed to generate PDF");
+    }
+
+    const blob = await res.blob();
+    console.log("✅ Received blob of size:", blob.size);
+
+    if (blob.size < 100) {
+      alert("Downloaded file is too small to be valid.");
       return;
     }
 
-    setDownloading(true);
-    try {
-      const res = await fetch(
-        `https://xl2ro1gduf.execute-api.ap-south-1.amazonaws.com/dev/pdf/celebrity/name/${encodeURIComponent(celebrity.name)}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Failed to generate PDF");
-      }
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${celebrity.name}_profile.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err: unknown) {
-  if (err instanceof Error) {
-    alert(err.message);
-  } else {
-    alert("Failed to download PDF");
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${celebrity.name}_profile.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err: unknown) {
+    console.error("❌ PDF download error:", err);
+    alert(err instanceof Error ? err.message : "Failed to download PDF");
+  } finally {
+    setDownloading(false);
   }
 }
-    finally {
-      setDownloading(false);
-    }
-  }
 
  if (loading) {
   return (
